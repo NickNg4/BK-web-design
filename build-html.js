@@ -12,7 +12,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SECTIONS, counts, validate } = require('./questions');
+const { SECTIONS, counts, validate, priorityPhrase } = require('./questions');
 
 // Referenced by char code so the raw characters never appear in this file.
 const LS = String.fromCharCode(0x2028);
@@ -50,7 +50,14 @@ const banner = [
   '   ---------------------------------------------------------------- */',
 ].join('\n  ');
 
-const out = tpl.replace(TOKEN, `${banner}\n  var SECTIONS = ${embed(SECTIONS)};`);
+const PRIORITY_TOKEN = '<!--__PRIORITY__-->';
+if (!tpl.includes(PRIORITY_TOKEN)) {
+  throw new Error(`${path.basename(TEMPLATE)} has no ${PRIORITY_TOKEN} placeholder — the intro would name sections from memory`);
+}
+
+const out = tpl
+  .replace(TOKEN, `${banner}\n  var SECTIONS = ${embed(SECTIONS)};`)
+  .replace(PRIORITY_TOKEN, priorityPhrase());
 
 fs.writeFileSync(OUT, out);
 console.log(`wrote ${path.basename(OUT)}  (${Math.round(out.length / 1024)} KB)  `

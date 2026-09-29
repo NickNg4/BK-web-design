@@ -13,7 +13,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SECTIONS, counts, validate } = require('./questions');
+const { SECTIONS, counts, validate, priorityPhrase } = require('./questions');
 
 // Referenced by char code so the raw characters never appear in this file.
 const LS = String.fromCharCode(0x2028);
@@ -88,7 +88,7 @@ var FORM_INTRO = [
   'build. Four things stall these projects more than anything else:',
   'no usable job photos, no licence and insurance numbers, nobody can log',
   'in to the domain, and nobody has decided who writes the words. If you only',
-  'do four sections, do 3, 9, 11 and 14.',
+  'do a few sections, do ' + priorityPhrase() + '.',
   '',
   'You can come back to it — when you submit, keep the "Edit your response"',
   'link that appears, and you can carry on later or correct anything.'

@@ -5,7 +5,7 @@
  * questions.js and re-run the build, or the web page and the Word version will
  * drift away from this one. (That has already happened once — see HANDOVER.md.)
  *
- * Builds a 17-section Google Form with 115 questions, plus a linked
+ * Builds a 14-section Google Form with 78 questions, plus a linked
  * spreadsheet that collects the answers.
  *
  * HOW TO RUN
@@ -18,7 +18,7 @@
  *   5. Open the Execution log. It prints three links: the form to send out,
  *      the editor, and the responses spreadsheet. The log stays empty until the
  *      run finishes, because Logger.log buffers — allow one to three minutes
- *      for roughly 132 items.
+ *      for roughly 92 items.
  *   6. On the Responses tab, open the three-dot menu and turn on
  *      "Get email notifications for new responses".
  *
@@ -27,9 +27,9 @@
  *
  * A NOTE ON REQUIRED QUESTIONS
  *   Nothing is marked required. Google Forms refuses to submit at all while
- *   a required answer is blank, and on a 115-question form filled in over
+ *   a required answer is blank, and on a 78-question form filled in over
  *   several sittings that turns one unknown licence number into an abandoned
- *   form. The 36 questions that block the build are marked with a star in
+ *   form. The 22 questions that block the build are marked with a star in
  *   the title instead, and called out on the intro page. Chase those.
  */
 
@@ -45,7 +45,7 @@ var FORM_INTRO = [
   'build. Four things stall these projects more than anything else:',
   'no usable job photos, no licence and insurance numbers, nobody can log',
   'in to the domain, and nobody has decided who writes the words. If you only',
-  'do four sections, do 3, 9, 11 and 14.',
+  'do a few sections, do ' + priorityPhrase() + '.',
   '',
   'You can come back to it — when you submit, keep the "Edit your response"',
   'link that appears, and you can carry on later or correct anything.'
@@ -79,10 +79,6 @@ var SECTIONS = [
         "t": "text",
         "label": "State, county or region",
         "r": true
-      },
-      {
-        "t": "text",
-        "label": "Languages the site must be in"
       }
     ]
   },
@@ -102,17 +98,8 @@ var SECTIONS = [
         "r": true
       },
       {
-        "t": "text",
-        "label": "Company or business registration number"
-      },
-      {
-        "t": "text",
-        "label": "VAT / GST / ABN / EIN number",
-        "hint": "Leave blank if you're not registered — that's a normal answer, and it changes how prices are shown."
-      },
-      {
         "t": "one",
-        "label": "Prices on the site should read",
+        "label": "Prices on the site should read…",
         "r": true,
         "opts": [
           "Including tax",
@@ -123,11 +110,6 @@ var SECTIONS = [
       {
         "t": "area",
         "label": "Registered address"
-      },
-      {
-        "t": "area",
-        "label": "Workshop, unit or depot address",
-        "hint": "Only if it differs from the registered one."
       },
       {
         "t": "text",
@@ -146,7 +128,7 @@ var SECTIONS = [
   {
     "n": "03",
     "title": "Licences, insurance, memberships",
-    "why": "The single strongest trust signal on an electrician's site. Someone deciding between you and a rival looks for these before they look at anything else.",
+    "why": "The single strongest trust signal on an electrician's site. A visitor deciding between you and a rival looks for these before they look at anything else.",
     "fields": [
       {
         "t": "text",
@@ -179,9 +161,13 @@ var SECTIONS = [
           "Which? Trusted Trader",
           "SafeContractor",
           "CHAS",
-          "Constructionline"
-        ],
-        "other": true
+          "Constructionline",
+          "Other"
+        ]
+      },
+      {
+        "t": "text",
+        "label": "Anything not on that list"
       },
       {
         "t": "many",
@@ -192,9 +178,9 @@ var SECTIONS = [
           "C&G 2919 EV charging",
           "NVQ Level 3",
           "JIB / ECS Gold Card",
-          "MCS solar PV"
-        ],
-        "other": true
+          "MCS solar PV",
+          "Other"
+        ]
       },
       {
         "t": "text",
@@ -221,28 +207,6 @@ var SECTIONS = [
           "Confined space",
           "First aid",
           "Manual handling"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "Background checks on staff",
-        "hint": "Matters more than you would think to someone letting a stranger into the house.",
-        "opts": [
-          "Everyone is checked",
-          "Some staff",
-          "None",
-          "Not relevant — commercial only"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "Can you send the logo file for each scheme you belong to?",
-        "r": true,
-        "hint": "Most schemes hand members a badge pack. Displaying one you're not entitled to is a real problem, so we only use what you can evidence.",
-        "opts": [
-          "Yes, I will send them",
-          "I will need help finding them",
-          "No"
         ]
       }
     ]
@@ -276,8 +240,11 @@ var SECTIONS = [
           "Hot tub supply",
           "New build first & second fix",
           "Electric showers & cookers"
-        ],
-        "other": true
+        ]
+      },
+      {
+        "t": "area",
+        "label": "Other domestic work — anything not on that list"
       },
       {
         "t": "many",
@@ -295,14 +262,16 @@ var SECTIONS = [
           "Planned maintenance contracts",
           "Street & car park lighting",
           "Generators & UPS"
-        ],
-        "other": true
+        ]
+      },
+      {
+        "t": "area",
+        "label": "Other commercial or industrial work — anything not on that list"
       },
       {
         "t": "area",
         "label": "Your top three to five earners, best first",
-        "r": true,
-        "hint": "Be honest about what pays, not what is interesting. These decide the shape of the whole site."
+        "r": true
       },
       {
         "t": "area",
@@ -321,7 +290,7 @@ var SECTIONS = [
       },
       {
         "t": "text",
-        "label": "Response time you'd put in writing, on average"
+        "label": "Response time you'd put in writing (in average)"
       },
       {
         "t": "one",
@@ -340,32 +309,13 @@ var SECTIONS = [
     ]
   },
   {
-    "n": "05",
-    "title": "Where you will travel",
-    "why": "Each named town can earn its own page, and those pages are how you show up for \"electrician near me\". \"And surrounding areas\" earns nothing.",
+    "n": "5",
+    "title": "What you want to be found for",
+    "why": "The phrases people type, not the ones you'd use in the trade. Nobody searches \"domestic electrical contracting solutions\".",
     "fields": [
       {
-        "t": "text",
-        "label": "Postcode or suburb you work out of",
-        "r": true
-      },
-      {
         "t": "area",
-        "label": "Every town, suburb or postcode you cover — all of them",
-        "r": true,
-        "hint": "Write them out. Twenty names beats a radius, because people search the name of their own town."
-      },
-      {
-        "t": "text",
-        "label": "How far you'll travel"
-      },
-      {
-        "t": "text",
-        "label": "What you charge beyond that"
-      },
-      {
-        "t": "text",
-        "label": "Three areas you'd most like more work in"
+        "label": "Exactly what you want to come up for"
       }
     ]
   },
@@ -453,44 +403,13 @@ var SECTIONS = [
       },
       {
         "t": "text",
-        "label": "WhatsApp number",
-        "hint": "People will happily send a photo of a scorched socket at 9pm."
-      },
-      {
-        "t": "text",
         "label": "Main email address",
         "r": true
       },
       {
-        "t": "text",
-        "label": "Where quote requests should land",
-        "hint": "If it's a different inbox from the main one."
-      },
-      {
-        "t": "one",
-        "label": "Street address on the site",
-        "r": true,
-        "hint": "Plenty of electricians work from home and would rather not publish it. Town-only still works for local search.",
-        "opts": [
-          "Yes, full address",
-          "Town or suburb only",
-          "No address at all"
-        ]
-      },
-      {
         "t": "area",
-        "label": "Opening hours, written how you'd say them",
+        "label": "Contact hours",
         "r": true
-      },
-      {
-        "t": "one",
-        "label": "How you'd rather be contacted",
-        "opts": [
-          "Phone call",
-          "Enquiry form",
-          "WhatsApp or text",
-          "Whatever suits them"
-        ]
       },
       {
         "t": "text",
@@ -522,14 +441,6 @@ var SECTIONS = [
       {
         "t": "text",
         "label": "Your colours"
-      },
-      {
-        "t": "one",
-        "label": "Brand guidelines document",
-        "opts": [
-          "Yes",
-          "No"
-        ]
       },
       {
         "t": "one",
@@ -654,78 +565,6 @@ var SECTIONS = [
     ]
   },
   {
-    "n": "11",
-    "title": "Domain, email and what exists now",
-    "why": "Access is what delays launches, not building. Pointing a domain at a new site can knock out your email if nobody knows where it is hosted — so we find out first, not on launch day.",
-    "fields": [
-      {
-        "t": "text",
-        "label": "Your domain name, or the one you want",
-        "r": true
-      },
-      {
-        "t": "one",
-        "label": "Who can log in and change the domain settings?",
-        "r": true,
-        "opts": [
-          "Me, and I have the login",
-          "My old web person",
-          "No idea",
-          "No domain yet"
-        ]
-      },
-      {
-        "t": "text",
-        "label": "Where your email is hosted",
-        "r": true,
-        "hint": "If you genuinely do not know, write \"don't know\" — we can look it up. Guessing is what breaks things."
-      },
-      {
-        "t": "text",
-        "label": "Current website address"
-      },
-      {
-        "t": "text",
-        "label": "What it's built on and who hosts it"
-      },
-      {
-        "t": "one",
-        "label": "The current site",
-        "opts": [
-          "Replace it completely",
-          "Keep some of the pages",
-          "There is not one"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "Google Business Profile",
-        "r": true,
-        "hint": "The map listing with your reviews on it. Often worth more traffic than the website itself.",
-        "opts": [
-          "Claimed, I have access",
-          "Claimed by someone else",
-          "Not claimed",
-          "Do not know what that is"
-        ]
-      },
-      {
-        "t": "area",
-        "label": "Social accounts"
-      },
-      {
-        "t": "one",
-        "label": "Existing Google Analytics or Search Console",
-        "opts": [
-          "Yes, I have access",
-          "Yes, but no access",
-          "No",
-          "Do not know"
-        ]
-      }
-    ]
-  },
-  {
     "n": "12",
     "title": "What the site is for",
     "why": "A site built to ring the phone looks different from one built to look credible when a facilities manager checks you out. It can't be excellent at both.",
@@ -762,14 +601,6 @@ var SECTIONS = [
       {
         "t": "text",
         "label": "Where you want that number"
-      },
-      {
-        "t": "area",
-        "label": "Two or three competitor sites you like, and why"
-      },
-      {
-        "t": "area",
-        "label": "Two or three you don't, and why"
       },
       {
         "t": "area",
@@ -840,37 +671,8 @@ var SECTIONS = [
   {
     "n": "14",
     "title": "The words",
-    "why": "The single most common thing a half-finished website is waiting on. Decide who writes them before anything gets built.",
+    "why": "",
     "fields": [
-      {
-        "t": "one",
-        "label": "Who writes the text?",
-        "r": true,
-        "opts": [
-          "I will write it",
-          "You write it, I'll approve",
-          "Hire a copywriter",
-          "Reuse what already exists"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "Existing wording we can reuse — leaflets, van, old site",
-        "opts": [
-          "Yes, I will send it",
-          "No"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "How it should sound",
-        "opts": [
-          "Friendly local tradesman",
-          "Straight and professional",
-          "Premium, high-end",
-          "No preference"
-        ]
-      },
       {
         "t": "area",
         "label": "Your story",
@@ -904,94 +706,6 @@ var SECTIONS = [
         "t": "area",
         "label": "Your complaints procedure",
         "hint": "Several schemes require members to publish one. If you have wording from them, paste it here."
-      }
-    ]
-  },
-  {
-    "n": "16",
-    "title": "Budget, dates and who owns what",
-    "why": "Worth being blunt about early. It changes what gets built, not whether anything does.",
-    "fields": [
-      {
-        "t": "text",
-        "label": "Budget for the build",
-        "r": true
-      },
-      {
-        "t": "text",
-        "label": "Monthly budget for hosting, upkeep and advertising"
-      },
-      {
-        "t": "text",
-        "label": "When it needs to be live, and why",
-        "r": true
-      },
-      {
-        "t": "one",
-        "label": "Who pays for the domain and hosting after launch?",
-        "opts": [
-          "Me, directly",
-          "You, bill me",
-          "Not decided"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "Do you want to change the site yourself afterwards?",
-        "r": true,
-        "hint": "This decides how it gets built. Retro-fitting an editor later is a rebuild.",
-        "opts": [
-          "Yes, regularly",
-          "Occasionally",
-          "No, I would rather you did it"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "How comfortable are you with a computer?",
-        "hint": "No wrong answer. It decides how simple the editing has to be.",
-        "opts": [
-          "Very",
-          "Average",
-          "Not at all"
-        ]
-      },
-      {
-        "t": "one",
-        "label": "Ongoing support",
-        "opts": [
-          "Monthly retainer",
-          "Ad hoc, as needed",
-          "I will handle it",
-          "Not decided"
-        ]
-      },
-      {
-        "t": "text",
-        "label": "Who signs the design off — name and email",
-        "r": true,
-        "hint": "One person. If your partner has a veto, name them here rather than at the end."
-      }
-    ]
-  },
-  {
-    "n": "17",
-    "title": "What you want to be found for",
-    "why": "The phrases people type, not the ones you would use in the trade. Nobody searches \"domestic electrical contracting solutions\".",
-    "fields": [
-      {
-        "t": "area",
-        "label": "Exactly what you want to come up for"
-      },
-      {
-        "t": "text",
-        "label": "Who comes up first when you search those now?"
-      },
-      {
-        "t": "area",
-        "label": "Your name, address and phone, written exactly as they appear everywhere else",
-        "r": true,
-        "hint": "Letter for letter, including \"Ltd\", \"Street\" vs \"St\", and the spacing in the phone number. Inconsistency between your website, Google and the directories quietly costs you local ranking."
       }
     ]
   }

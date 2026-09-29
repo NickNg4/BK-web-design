@@ -19,7 +19,7 @@ const FONT  = "Arial";
 // Questions come from questions.js — the single source of truth. This file only
 // decides how they look on paper. `q` is this builder's own name for a question
 // label, aliased here so the layout code below reads unchanged.
-const { SECTIONS: CANON, counts, validate } = require("./questions");
+const { SECTIONS: CANON, counts, validate, priorityPhrase } = require("./questions");
 validate();
 const SECTIONS = CANON.map((s) => ({
   ...s,
@@ -153,7 +153,7 @@ body.push(new Paragraph({
 }));
 body.push(new Paragraph({
   spacing: { after: 120, line: 300 },
-  children: [t("No usable job photos. No licence and insurance numbers. Nobody can log in to the domain. Nobody has decided who writes the words. If you do nothing else, do sections 3, 9, 11 and 14.", { size: 21 })],
+  children: [t("No usable job photos. No licence and insurance numbers. Nobody can log in to the domain. Nobody has decided who writes the words. If you do nothing else, do sections " + priorityPhrase() + ".", { size: 21 })],
 }));
 body.push(rule(160));
 body.push(new Paragraph({

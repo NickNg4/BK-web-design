@@ -18,7 +18,7 @@ questions.js ──┬─ build-html.js ─→ electrician-intake.html   (+ inta
 
 | File | Purpose |
 |---|---|
-| `questions.js` | **The questions.** 17 sections, 115 questions, 36 flagged as build blockers. Edit this. |
+| `questions.js` | **The questions.** 14 sections, 78 questions, 22 flagged as build blockers. Edit this. |
 | `intake-template.html` | Chrome, styling and page logic for the web page. Edit this for how the page *behaves*. |
 | `electrician-intake.html` | Generated. The fillable web page, and the source for the published link. |
 | `build-intake-form.gs` | Generated. Paste into script.google.com to build the Google Form. |

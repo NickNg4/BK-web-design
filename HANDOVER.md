@@ -23,7 +23,12 @@ Only three answers are in. Everything else is blank and waiting on the intake fo
 
 ## The questionnaire
 
-**17 sections, 115 questions, 36 of them flagged as build blockers.**
+**14 sections, 78 questions, 22 of them flagged as build blockers.**
+
+This is the shorter questionnaire, set to match the copy the client supplied on
+2026-09-29. A longer 115-question version — adding service areas, domain and email,
+budget and sign-off, and the rest of "The words" — is in git history at `9d7fbe0`.
+Restore from there rather than retyping if it is ever wanted back.
 
 `questions.js` is the only place a question is defined. The three formats the client might
 fill in are generated from it — see README.md for the file map and the build commands.
@@ -72,7 +77,7 @@ Sharing is set to **anyone with the link**. The client can open and fill it with
 still type, and his draft saves in his own browser.
 
 No submit button. He fills it in, presses **Copy to clipboard**, pastes into an email. Tell him
-that explicitly or he will fill in 115 questions and wait for something to happen.
+that explicitly or he will fill in 78 questions and wait for something to happen.
 
 **Editing it:** `electrician-intake.html` is the source, but `npm run build` does not touch the
 live page. Republishing is a separate, manual step, and it must pass that URL — a publish
@@ -90,7 +95,7 @@ it parses, every Forms API call in it is a real one, and its question set matche
 2. Authorise past the "unverified app" warning (Advanced → Go to project)
 3. Execution log prints the form link, the editor link and the responses spreadsheet link.
    The log stays empty until the run **finishes** — `Logger.log` buffers. Expect 1–3 minutes
-   for ~132 items.
+   for ~92 items.
 4. Responses tab → ⋮ → **Get email notifications for new responses**
 5. Workspace accounts only: Settings → uncheck **Restrict to users in [org]**
 
@@ -109,16 +114,20 @@ for us, least for him.
   organization-internal, which means the client cannot open it at all. That is why the return
   path is copy-and-paste. Not an oversight.
 - **Nothing is marked required in the Google Form.** Google Forms refuses the whole submission
-  while any required field is blank. On a 115-question form filled in over several sittings,
+  while any required field is blank. On a 78-question form filled in over several sittings,
   one unknown licence number would produce an abandoned form. Blockers are flagged visually
   instead — an amber dot on the web page, a leading `*` in the Google Form.
-- **Blockers over completeness.** 36 of the 115 questions genuinely block the build. The form
+- **Blockers over completeness.** 22 of the 78 questions genuinely block the build. The form
   tracks those separately from overall progress, and the intro tells him that doing sections
-  3, 9, 11 and 14 alone is enough to start.
-- **The free-text catch-all is part of its question, not a separate one.** It was a separate
-  question in two formats and missing from the third. It now uses the Google Form's native
-  "Other:" row, and a paired input on the web page. This keeps the three counts comparable,
-  which is what makes `verify.js` meaningful.
+  3, 9 and 14 alone is enough to start.
+- **The sections the intro points at are derived, never typed.** `questions.js` exports
+  `priorityPhrase()`, filtered against the sections that actually exist, and all three formats
+  use it. The page used to tell the client to fill in section 11 after section 11 had been
+  removed from it; that is now impossible, and `verify.js` fails if the intro names a section
+  that is not there.
+- **The free-text catch-alls are questions of their own** in this version (`schemes_other`,
+  `svc_dom_other`, `svc_com_other`), matching the supplied copy. `questions.js` also supports
+  attaching one to its list with `other: true`, which is what the 115-question version used.
 
 ## The four things that stall builds like this
 
@@ -138,9 +147,14 @@ Carried into the form's intro copy deliberately. Chase these by phone rather tha
    three, he'll do none.
 3. Source a domain. Check availability against the trading name once §02 comes back. Register
    in the client's name.
-4. Everything else waits on answers. Do not start designing pages before §04 (top earners),
-   §05 (service areas) and §12 (goal, audience, differentiator) are in — they determine the
-   site's structure, not just its content.
+4. Everything else waits on answers. Do not start designing pages before §04 (top earners)
+   and §12 (goal, audience, differentiator) are in — they determine the site's structure, not
+   just its content.
+5. **This version does not ask for the service areas, the domain and email details, or the
+   budget and sign-off.** Those sections were dropped to match the supplied copy. The towns he
+   covers decide whether there are location pages at all, and email hosting decides whether
+   pointing the domain breaks his mail — so get both by phone, or restore those sections from
+   `9d7fbe0`.
 
 ## Working on this from a cloud session
 

@@ -149,13 +149,23 @@ if (!fs.existsSync(htmlPath)) {
   if (html.includes('__QUESTIONS__')) {
     fail('electrician-intake.html', 'still contains the template placeholder — the build did not run');
   }
-  // The intro points the client at four sections by number; they have to exist.
-  const cited = (html.match(/do 3, 9, 11 and 14/) || []).length;
-  ['03', '09', '11', '14'].forEach((n) => {
-    if (cited && !SECTIONS.some((s) => s.n === n)) {
-      fail('electrician-intake.html', `intro tells the client to do §${n}, which no longer exists`);
-    }
-  });
+  if (html.includes('<!--__PRIORITY__-->')) {
+    fail('electrician-intake.html', 'the priority-sections placeholder was not filled in');
+  }
+  // The intro points the client at particular sections by number. Every number
+  // it names has to be a section that exists — naming a removed one is exactly
+  // how the page ended up telling the client to fill in a section that was not
+  // there.
+  const intro = /do a few sections, do ([^.<]+)\./.exec(html);
+  if (!intro) {
+    fail('electrician-intake.html', 'intro no longer names the priority sections');
+  } else {
+    intro[1].split(/,| and /).map((s) => s.trim()).filter(Boolean).forEach((n) => {
+      if (!SECTIONS.some((s) => Number(s.n) === Number(n))) {
+        fail('electrician-intake.html', `intro tells the client to do §${n}, which does not exist`);
+      }
+    });
+  }
   note(`${Math.round(html.length / 1024)} KB, question set matches`);
 }
 
