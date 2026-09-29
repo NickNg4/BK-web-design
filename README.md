@@ -1,11 +1,15 @@
-# BK Web Design — electrician site
+# BK Web Design — BK Electrician
 
-Client intake material for an electrician's company website. The site itself does not exist
-yet; this repo holds the questionnaire used to gather what's needed to build it.
+Website project for BK Electrician, an electrical contractor in Victoria, Australia. Two parts:
 
-Start with [HANDOVER.md](HANDOVER.md) — project state, client facts, decisions and next actions.
+- **The intake questionnaire** — gathers what is needed to build the site, in three formats.
+- **The website** — in [`website/`](website/README.md): a complete sample site with
+  placeholders for every business detail, photo and the logo, ready to fill in and launch.
 
-## How this fits together
+Start with [HANDOVER.md](HANDOVER.md) — project state, client facts, the domain, decisions and
+next actions.
+
+## The questionnaire
 
 `questions.js` is the only place a question is defined. Everything the client sees is generated
 from it, so the three formats cannot say different things.
@@ -29,10 +33,12 @@ questions.js ──┬─ build-html.js ─→ electrician-intake.html   (+ inta
 
 ```bash
 npm install
-npm run check      # rebuild all three, then verify they agree
+npm run check        # questionnaire: rebuild all three formats, then verify they agree
+npm run build:site   # website: build website/dist and list what is still a placeholder
+npm run test:site    # website: check every page in a real browser
 ```
 
-Or individually: `npm run build`, `npm run verify`.
+Questionnaire steps individually: `npm run build`, `npm run verify`.
 
 Do not edit the generated files by hand — the next build overwrites them, and `verify.js` will
 fail in the meantime.

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-label="Photo needed">
+<defs><pattern id="s" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="28" height="28" fill="#e8ebe4"/><rect width="14" height="28" fill="#e2e6de"/></pattern></defs>
+<rect width="1400" height="900" fill="url(#s)"/>
+<rect x="32" y="32" width="1336" height="836" fill="none" stroke="#b5bdb0" stroke-width="3" stroke-dasharray="14 10" rx="10"/>
+<g transform="translate(647.2 260.95) scale(4.4)" fill="none" stroke="#7d887f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></g>
+<text x="700" y="438.55" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="1" fill="#3f4a42">PHOTO NEEDED</text>
+<text x="700" y="512.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="37" fill="#4b5750">The van — signwritten if possible. Night shots work well</text>
+<text x="700" y="562.45" text-anchor="middle" font-family="Arial, sans-serif" font-size="37" fill="#4b5750">for emergency work.</text>
+<text x="700" y="632.75" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" fill="#6f7a72">1400 × 900 px or larger · landscape · file: service-emergency</text>
+</svg>

@@ -6,9 +6,14 @@
   "scripts": {
     "build": "node build-html.js && node build-gs.js && node build-docx.js",
     "verify": "node verify.js",
-    "check": "npm run build && npm run verify"
+    "check": "npm run build && npm run verify",
+    "build:site": "node website/build.js",
+    "test:site": "node website/test/site.test.js"
   },
   "dependencies": {
     "docx": "^9.7.1"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
   }
 }

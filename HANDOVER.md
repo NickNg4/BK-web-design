@@ -4,12 +4,13 @@ Last updated: 2026-09-29
 
 ## Where this is
 
-Requirements-gathering stage. **No website has been designed or built yet.** All work so far
-is about getting the client's information out of his head and into a usable brief, because
-almost every downstream decision (page structure, local SEO, whether prices are published,
-whether he can edit the site himself) depends on answers only he has.
+Requirements-gathering, with a **sample website** built ahead of the answers. The intake
+questionnaire is ready to send; the website in `website/` is complete and working but every
+business detail, photo and the logo is a placeholder until the brief comes back. A domain has
+been recommended but **not yet confirmed as available** — see below.
 
-Client: an electrician's company. Referred to below as "the client".
+Client: **BK Electrician**, an electrical contractor in **Victoria, Australia**. Referred to
+below as "the client".
 
 ## Client facts already established
 
@@ -20,6 +21,7 @@ Only three answers are in. Everything else is blank and waiting on the intake fo
 | §11 | **Never had a website.** No domain yet. | Domain needs sourcing and registering. No redirects, no legacy URLs, no existing SEO to preserve, no email-hosting risk at cutover — a clean start. Also means no Google Business Profile history to assume. |
 | §14 | **We write the copy, client approves.** | Removes the single most common cause of a stalled build. But it means the About page and the differentiator must be extracted from him verbally — §12 and §14 of the form matter more than usual. |
 | §4 | Service lists carry a free-text catch-all on both domestic and commercial. | He flagged that the fixed lists didn't cover everything he does. |
+| — | **Trading as BK Electrician, in Victoria.** | Victorian rules apply to the site: REC number on all advertising, Certificates of Electrical Safety, the rental safety-check regime. See `website/README.md`. |
 
 ## The questionnaire
 
@@ -63,6 +65,48 @@ mutations, including this exact bug.
 Two counts that were wrong in earlier notes, in case they are quoted anywhere else: the header
 of the `.gs` claimed 95 questions and an earlier version of this document claimed 118. Both were
 stale. The real figures are in `questions.js` and are printed by every build.
+
+## Domain
+
+**Recommended: `bkelectrician.com.au`, plus `bkelectrician.au` alongside it** (redirected to
+the `.com.au`, so nobody else can take it).
+
+- An exact match for the trading name, which is what `.com.au` eligibility is built on.
+- **Availability is not confirmed.** This cloud environment's network policy blocks the
+  registry (`rdap.cctld.au`, `whois.auda.org.au`) and every DNS route, so nothing was looked up
+  directly. A web search found no live site on it. Check at any registrar before quoting it to
+  the client. `bkelectrician.com` belongs to an unrelated US business — irrelevant here, since
+  an Australian trade site belongs on `.com.au`.
+- **Register it in the client's name, against his ABN.** `.com.au` requires an ABN, which
+  enforces the rule anyway. If "BK Electrician" is not yet a registered business name, register
+  it with ASIC first — the domain's eligibility rests on it.
+- **Near-namesakes in Melbourne:** BK-Electrics (Bentleigh East), BK Electrical Group, and BKC
+  Electrics (south-east suburbs). So avoid `bkelectrical.com.au` and `bkelectrics.com.au` —
+  customers would confuse them. **Worth asking the client whether he is one of these** — if so,
+  the domain should match the name customers already know.
+- Fallbacks if it is taken: `bkelectricianvic.com.au`, or the name plus his base suburb.
+
+## The website
+
+`website/` — a complete static site generated from one file, `website/content.js`. Full
+instructions are in `website/README.md`; the parts that matter for handover:
+
+- **It is a sample until it is finished, and it knows it.** Until every placeholder is filled,
+  every photo supplied and the enquiry form connected, every page carries a banner and a
+  `noindex`, and `robots.txt` blocks search engines. The build reports what is left and says
+  `LAUNCH-READY` when nothing is. It also refuses to finish if a placeholder is typed into
+  `build.js` instead of `content.js`.
+- **Each fact is typed once.** Phone, REC number, region and the rest are referenced by
+  `{token}` in the copy, so they cannot disagree across pages — which also keeps the name,
+  address and phone consistent for local search.
+- **Built around Victorian rules**, each checked against ESV or Consumer Affairs Victoria:
+  REC number on every page, Certificates of Electrical Safety for all installation work,
+  independent inspection of switchboard (prescribed) work, and the rental check change below.
+- **The rental safety-check page is timely.** From **13 October 2026** every Victorian rental
+  needs an electrical safety check every two years — not just leases signed since March 2021.
+  It is on the home page, in the menu, and has its own page. Once it stops being news, set
+  `home.notice` to `null`.
+- `npm run build:site` builds it; `npm run test:site` checks it in a real browser.
 
 ## The three routes to collect answers
 
@@ -145,16 +189,21 @@ Carried into the form's intro copy deliberately. Chase these by phone rather tha
 1. Run the Apps Script, get the form link, turn on email notifications.
 2. Send the client one route — the Google Form unless there's a reason not to. Don't send
    three, he'll do none.
-3. Source a domain. Check availability against the trading name once §02 comes back. Register
-   in the client's name.
-4. Everything else waits on answers. Do not start designing pages before §04 (top earners)
-   and §12 (goal, audience, differentiator) are in — they determine the site's structure, not
-   just its content.
+3. **Confirm `bkelectrician.com.au` is free** at a registrar, ask the client whether he is one
+   of the near-namesakes above, then register it and `bkelectrician.au` in his name, against
+   his ABN.
+4. Show the client the sample site. Its structure is a starting point: which services get
+   their own page should follow §04 (top earners), and the home page's one empty "why us"
+   point is §12 (the differentiator). Revisit both when the answers come in.
 5. **This version does not ask for the service areas, the domain and email details, or the
    budget and sign-off.** Those sections were dropped to match the supplied copy. The towns he
    covers decide whether there are location pages at all, and email hosting decides whether
    pointing the domain breaks his mail — so get both by phone, or restore those sections from
    `9d7fbe0`.
+6. **The questionnaire reads as British.** Its examples and options include NICEIC, Part P,
+   pounds, VAT and West Midlands towns, from before the client was known to be in Victoria.
+   An Australian electrician will stumble on them — the Victorian equivalents are ESV, the REC
+   number, the A-grade licence, GST and the ABN. Worth localising before it goes out.
 
 ## Working on this from a cloud session
 
