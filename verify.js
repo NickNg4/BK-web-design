@@ -39,6 +39,54 @@ function extractLiteral(src, file) {
   return eval(src.slice(m.index + m[0].length - 1, i + 1));
 }
 
+/**
+ * A .docx is a zip. Pull word/document.xml out of it without a dependency:
+ * walk the local file headers, inflate the one we want. Returns the question
+ * labels that are not in the document, or null if it could not be read.
+ */
+function docxMissingQuestions(file) {
+  let xml = null;
+  try {
+    const buf = fs.readFileSync(file);
+    const zlib = require('zlib');
+    let p = 0;
+    while (p + 30 <= buf.length && buf.readUInt32LE(p) === 0x04034b50) {
+      const flags = buf.readUInt16LE(p + 6);
+      const method = buf.readUInt16LE(p + 8);
+      const compSize = buf.readUInt32LE(p + 18);
+      const nameLen = buf.readUInt16LE(p + 26);
+      const extraLen = buf.readUInt16LE(p + 28);
+      const name = buf.slice(p + 30, p + 30 + nameLen).toString('latin1');
+      const dataAt = p + 30 + nameLen + extraLen;
+      if (name === 'word/document.xml') {
+        const raw = buf.slice(dataAt, dataAt + compSize);
+        xml = (method === 0 ? raw : zlib.inflateRawSync(raw)).toString('utf8');
+        break;
+      }
+      // Bit 3 means the sizes come after the data instead, so we cannot skip
+      // the entry from the header alone. Directory entries are empty by nature
+      // and are not that case.
+      if (flags & 0x08) return null;
+      p = dataAt + compSize;
+    }
+  } catch (e) {
+    return null;
+  }
+  if (!xml) return null;
+
+  // Match how the docx writer escapes text — it entity-encodes apostrophes and
+  // quotes as well as the three that strictly need it.
+  const esc = (s) => s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/'/g, '&apos;')
+    .replace(/"/g, '&quot;');
+  return SECTIONS.flatMap((s) => s.fields)
+    .map((f) => f.label)
+    .filter((label) => !xml.includes(esc(label)));
+}
+
 /** The shape we compare on: what the client is actually asked, in order. */
 function shape(secs, labelKey) {
   return secs.map((s) => ({
@@ -157,12 +205,19 @@ if (!fs.existsSync(docxPath)) {
   if (!/require\(["']\.\/questions["']\)/.test(builder)) {
     fail('build-docx.js', 'does not require ./questions — it has its own copy of the questions again');
   }
-  const qAge = fs.statSync(path.join(D, 'questions.js')).mtimeMs;
-  const dAge = fs.statSync(docxPath).mtimeMs;
-  if (dAge < qAge) {
-    fail('electrician-build-brief.docx', 'older than questions.js — run `node build-docx.js`');
+  // Read the questions back out of the .docx itself. Timestamps are no use —
+  // a fresh clone gives every file the same checkout time, so an mtime
+  // comparison here would pass or fail at random.
+  const missing = docxMissingQuestions(docxPath);
+  if (missing === null) {
+    fail('electrician-build-brief.docx', 'could not be read as a .docx — regenerate it');
+  } else if (missing.length) {
+    fail('electrician-build-brief.docx',
+      `${missing.length} question(s) missing — run \`node build-docx.js\`\n`
+      + missing.slice(0, 5).map((m) => `      · ${m}`).join('\n')
+      + (missing.length > 5 ? `\n      · …and ${missing.length - 5} more` : ''));
   } else {
-    note(`${Math.round(fs.statSync(docxPath).size / 1024)} KB, newer than questions.js`);
+    note(`${Math.round(fs.statSync(docxPath).size / 1024)} KB, all ${c.questions} questions present`);
   }
 }
 
