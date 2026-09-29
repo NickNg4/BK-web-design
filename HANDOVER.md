@@ -19,21 +19,45 @@ Only three answers are in. Everything else is blank and waiting on the intake fo
 |---|---|---|
 | §11 | **Never had a website.** No domain yet. | Domain needs sourcing and registering. No redirects, no legacy URLs, no existing SEO to preserve, no email-hosting risk at cutover — a clean start. Also means no Google Business Profile history to assume. |
 | §14 | **We write the copy, client approves.** | Removes the single most common cause of a stalled build. But it means the About page and the differentiator must be extracted from him verbally — §12 and §14 of the form matter more than usual. |
-| §4 | Service lists now carry an "other" free-text on both domestic and commercial. | He flagged that the fixed lists didn't cover everything he does. |
+| §4 | Service lists carry a free-text catch-all on both domestic and commercial. | He flagged that the fixed lists didn't cover everything he does. |
 
-## Files in this repo
+## The questionnaire
 
-| File | What it is |
-|---|---|
-| `electrician-intake.html` | The fillable web page. Source for the published artifact. 118 questions across 17 sections. |
-| `build-intake-form.gs` | Google Apps Script. Run it in script.google.com and it builds the same questionnaire as a real Google Form plus a linked responses spreadsheet. |
-| `build-docx.js` | Node script that generates the Word version. `npm install` then `node build-docx.js`. |
-| `electrician-build-brief.docx` | The Word version, for emailing or printing. |
+**17 sections, 115 questions, 36 of them flagged as build blockers.**
 
-**Warning: the question set exists in three separate copies** — inside the HTML, inside the
-`.gs`, and inside `build-docx.js`. They drift. A change to one is not a change to the others.
-As of this handover the `.docx` is one revision behind: it lacks the two "other" service
-fields added on 2026-09-29. Regenerate it with `node build-docx.js` if that matters.
+`questions.js` is the only place a question is defined. The three formats the client might
+fill in are generated from it — see README.md for the file map and the build commands.
+
+This was not always true, and it caused a real problem. Read the next section before touching
+anything.
+
+### What went wrong on 2026-09-29, and what now stops it
+
+The question set used to be hand-maintained in three separate copies — inside the HTML, inside
+the `.gs`, and inside `build-docx.js`. They drifted, silently. By the time anyone counted:
+
+- **§05 (service areas), §11 (domain and email) and §16 (budget, dates, sign-off) were gone
+  from the web page entirely.**
+- §14 "The words" was down to 1 of its 4 questions, and had lost its `why` line, so the page
+  rendered the literal string **"undefined"** under that heading.
+- §17 was down to 1 of 3 questions and mis-numbered `"5"`, so it sat between §04 and §06.
+- The intro told the client *"if you only do four sections, do 3, 9, 11 and 14"* while §11 was
+  not on the page at all.
+
+That is 37 questions, 14 of them blockers — including the service areas and the differentiator
+that decide the site's structure, not just its content. The published page the client has the
+link to was byte-identical to the repo copy, so it was broken in exactly the same way. Nobody
+would have found out until the answers came back with three sections missing.
+
+Fixed by generating all three formats from `questions.js`, and by `verify.js`, which counts the
+questions back out of each built file and fails if they disagree. It is checked against four
+mutations, including this exact bug.
+
+**So: add a question in `questions.js`, run `npm run check`, and never edit a generated file.**
+
+Two counts that were wrong in earlier notes, in case they are quoted anywhere else: the header
+of the `.gs` claimed 95 questions and an earlier version of this document claimed 118. Both were
+stale. The real figures are in `questions.js` and are printed by every build.
 
 ## The three routes to collect answers
 
@@ -48,21 +72,25 @@ Sharing is set to **anyone with the link**. The client can open and fill it with
 still type, and his draft saves in his own browser.
 
 No submit button. He fills it in, presses **Copy to clipboard**, pastes into an email. Tell him
-that explicitly or he will fill in 118 questions and wait for something to happen.
+that explicitly or he will fill in 115 questions and wait for something to happen.
 
-**Editing it:** `electrician-intake.html` in this repo is the source, but editing the file does
-not change the live page. Republish explicitly, passing the URL above — a publish without the
-URL creates a separate artifact at a new address, orphaning the link the client already has.
+**Editing it:** `electrician-intake.html` is the source, but `npm run build` does not touch the
+live page. Republishing is a separate, manual step, and it must pass that URL — a publish
+without it creates a separate artifact at a new address, orphaning the link the client has.
+
+The field storage keys are stable, so republishing does not throw away a draft the client has
+already started. Renaming a `k` in `questions.js` would; don't.
 
 ### 2. Google Form (best option — answers return automatically)
 
-Not yet created at time of writing; the script was mid-run.
+Not yet created. The script is ready and verified as far as it can be without running it:
+it parses, every Forms API call in it is a real one, and its question set matches the source.
 
 1. script.google.com → New project → paste `build-intake-form.gs` → Save → Run
 2. Authorise past the "unverified app" warning (Advanced → Go to project)
 3. Execution log prints the form link, the editor link and the responses spreadsheet link.
    The log stays empty until the run **finishes** — `Logger.log` buffers. Expect 1–3 minutes
-   for ~135 API calls.
+   for ~132 items.
 4. Responses tab → ⋮ → **Get email notifications for new responses**
 5. Workspace accounts only: Settings → uncheck **Restrict to users in [org]**
 
@@ -81,12 +109,16 @@ for us, least for him.
   organization-internal, which means the client cannot open it at all. That is why the return
   path is copy-and-paste. Not an oversight.
 - **Nothing is marked required in the Google Form.** Google Forms refuses the whole submission
-  while any required field is blank. On a 118-question form filled in over several sittings,
+  while any required field is blank. On a 115-question form filled in over several sittings,
   one unknown licence number would produce an abandoned form. Blockers are flagged visually
   instead — an amber dot on the web page, a leading `*` in the Google Form.
-- **Blockers over completeness.** ~28 of the 118 questions genuinely block the build. The form
+- **Blockers over completeness.** 36 of the 115 questions genuinely block the build. The form
   tracks those separately from overall progress, and the intro tells him that doing sections
   3, 9, 11 and 14 alone is enough to start.
+- **The free-text catch-all is part of its question, not a separate one.** It was a separate
+  question in two formats and missing from the third. It now uses the Google Form's native
+  "Other:" row, and a paired input on the web page. This keeps the three counts comparable,
+  which is what makes `verify.js` meaningful.
 
 ## The four things that stall builds like this
 
@@ -101,7 +133,7 @@ Carried into the form's intro copy deliberately. Chase these by phone rather tha
 
 ## Next actions
 
-1. Finish the Apps Script run, get the form link, turn on email notifications.
+1. Run the Apps Script, get the form link, turn on email notifications.
 2. Send the client one route — the Google Form unless there's a reason not to. Don't send
    three, he'll do none.
 3. Source a domain. Check availability against the trading name once §02 comes back. Register

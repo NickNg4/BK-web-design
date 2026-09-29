@@ -5,21 +5,37 @@ yet; this repo holds the questionnaire used to gather what's needed to build it.
 
 Start with [HANDOVER.md](HANDOVER.md) — project state, client facts, decisions and next actions.
 
-## Contents
+## How this fits together
+
+`questions.js` is the only place a question is defined. Everything the client sees is generated
+from it, so the three formats cannot say different things.
+
+```
+questions.js ──┬─ build-html.js ─→ electrician-intake.html   (+ intake-template.html)
+               ├─ build-gs.js   ─→ build-intake-form.gs
+               └─ build-docx.js ─→ electrician-build-brief.docx
+```
 
 | File | Purpose |
 |---|---|
-| `electrician-intake.html` | Fillable web page — 118 questions, 17 sections. Source for the published page. |
-| `build-intake-form.gs` | Google Apps Script that builds the same questionnaire as a Google Form. |
-| `build-docx.js` | Generates the Word version. |
-| `electrician-build-brief.docx` | Word version, for email or print. |
+| `questions.js` | **The questions.** 17 sections, 115 questions, 36 flagged as build blockers. Edit this. |
+| `intake-template.html` | Chrome, styling and page logic for the web page. Edit this for how the page *behaves*. |
+| `electrician-intake.html` | Generated. The fillable web page, and the source for the published link. |
+| `build-intake-form.gs` | Generated. Paste into script.google.com to build the Google Form. |
+| `electrician-build-brief.docx` | Generated. Word version, for email or print. |
+| `verify.js` | Checks the three generated formats still agree with `questions.js`. |
 
-## Regenerating the Word document
+## Working on it
 
 ```bash
 npm install
-node build-docx.js
+npm run check      # rebuild all three, then verify they agree
 ```
+
+Or individually: `npm run build`, `npm run verify`.
+
+Do not edit the generated files by hand — the next build overwrites them, and `verify.js` will
+fail in the meantime.
 
 ## Building the Google Form
 
@@ -27,7 +43,13 @@ Paste `build-intake-form.gs` into a new project at [script.google.com](https://s
 save, and run `buildIntakeForm`. It prints the form link, the editor link and the responses
 spreadsheet link once the run completes. Full steps and gotchas are in HANDOVER.md.
 
-## Note
+## Two things that have bitten before
 
-The question set is duplicated across the HTML, the `.gs` and `build-docx.js`. Changing one does
-not change the others.
+**The published web page is not built by `npm run build`.** Publishing is a separate manual step,
+and it has to go to the artifact URL the client already has or their link stops working. See
+HANDOVER.md.
+
+**The question set used to be hand-maintained in three copies.** They drifted, and the web page
+silently lost three whole sections and most of a fourth — 37 questions, 14 of them blockers —
+without anything complaining. That is what `questions.js` and `verify.js` exist to prevent. Run
+`npm run verify` before sending anything to the client.
