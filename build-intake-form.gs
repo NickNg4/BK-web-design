@@ -77,7 +77,7 @@ var SECTIONS = [
       },
       {
         "t": "text",
-        "label": "State, county or region",
+        "label": "State and area",
         "r": true
       }
     ]
@@ -89,7 +89,7 @@ var SECTIONS = [
     "fields": [
       {
         "t": "text",
-        "label": "Registered legal name",
+        "label": "Registered business or company name, and ABN",
         "r": true
       },
       {
@@ -102,14 +102,14 @@ var SECTIONS = [
         "label": "Prices on the site should read…",
         "r": true,
         "opts": [
-          "Including tax",
-          "Excluding tax",
+          "Including GST",
+          "Excluding GST",
           "No prices on the site at all"
         ]
       },
       {
         "t": "area",
-        "label": "Registered address"
+        "label": "Registered business address"
       },
       {
         "t": "text",
@@ -132,8 +132,9 @@ var SECTIONS = [
     "fields": [
       {
         "t": "text",
-        "label": "Electrical licence or registration number",
-        "r": true
+        "label": "REC number and A-grade licence number",
+        "r": true,
+        "hint": "Your REC number has to appear on the website — Energy Safe Victoria requires it on all advertising."
       },
       {
         "t": "text",
@@ -148,20 +149,11 @@ var SECTIONS = [
         "t": "many",
         "label": "Schemes and trade bodies you're a member of",
         "opts": [
-          "NICEIC",
-          "NAPIT",
-          "ELECSA",
-          "SELECT",
-          "RECI",
-          "Part P registered",
-          "Master Electricians",
+          "Master Electricians Australia",
           "NECA",
-          "IBEW",
-          "TrustMark",
-          "Which? Trusted Trader",
-          "SafeContractor",
-          "CHAS",
-          "Constructionline",
+          "Solar installer accreditation (SAA / CEC)",
+          "Housing Industry Association (HIA)",
+          "Master Builders Victoria",
           "Other"
         ]
       },
@@ -173,12 +165,12 @@ var SECTIONS = [
         "t": "many",
         "label": "Qualifications worth putting on the page",
         "opts": [
-          "18th Edition (BS 7671)",
-          "C&G 2391 inspection & testing",
-          "C&G 2919 EV charging",
-          "NVQ Level 3",
-          "JIB / ECS Gold Card",
-          "MCS solar PV",
+          "A-grade electrician's licence",
+          "Licensed Electrical Inspector (LEI)",
+          "Solar & battery installer accreditation",
+          "EV charger manufacturer training",
+          "Registered cabler (data & phone)",
+          "Refrigerant handling licence (ARCtick)",
           "Other"
         ]
       },
@@ -189,7 +181,7 @@ var SECTIONS = [
       },
       {
         "t": "text",
-        "label": "Employers' liability — cover amount and insurer"
+        "label": "WorkCover (WorkSafe Victoria) — if you employ staff"
       },
       {
         "t": "text",
@@ -197,16 +189,16 @@ var SECTIONS = [
       },
       {
         "t": "many",
-        "label": "Site tickets and safety cards",
+        "label": "Tickets and safety training",
         "opts": [
-          "CSCS / ECS card",
-          "IPAF",
-          "PASMA",
+          "White Card (construction induction)",
+          "EWP licence",
           "Working at heights",
           "Asbestos awareness",
           "Confined space",
-          "First aid",
-          "Manual handling"
+          "First aid / CPR",
+          "Low voltage rescue (LVR)",
+          "Test & tag"
         ]
       }
     ]
@@ -221,25 +213,25 @@ var SECTIONS = [
         "label": "Domestic work",
         "opts": [
           "Full and partial rewires",
-          "Consumer unit / fuse board upgrades",
-          "EICR inspection & testing",
-          "Landlord certificates",
-          "PAT testing",
+          "Switchboard upgrades",
+          "Safety switch (RCD) installation",
+          "Rental electrical safety checks",
+          "Pre-purchase electrical inspections",
           "Fault finding",
-          "Sockets & switches",
-          "Indoor lighting design",
+          "Power points & USB outlets",
+          "Indoor lighting & downlights",
           "Garden & outdoor lighting",
           "EV charger install",
-          "Solar PV & battery storage",
+          "Solar & battery storage",
           "Smart home / automation",
           "CCTV & alarms",
-          "Data & network cabling",
+          "Data & TV points",
           "Kitchen & bathroom electrics",
-          "Underfloor heating",
-          "Garage & outbuilding supply",
-          "Hot tub supply",
-          "New build first & second fix",
-          "Electric showers & cookers"
+          "Split-system air-con (electrical side)",
+          "Ceiling & exhaust fans",
+          "Smoke alarms",
+          "New builds & extensions (rough-in & fit-off)",
+          "Hot water systems & cooktops"
         ]
       },
       {
@@ -250,17 +242,17 @@ var SECTIONS = [
         "t": "many",
         "label": "Commercial and industrial work",
         "opts": [
-          "Commercial EICR",
-          "Fire alarm install & testing",
-          "Emergency lighting",
+          "Commercial electrical inspections",
+          "Emergency & exit lighting testing",
           "Three-phase work",
-          "Shop & office fit-out",
+          "Shop & office fit-outs",
           "Machinery & control panels",
           "Distribution boards",
-          "Data centre / comms rooms",
-          "Landlord & agent contracts",
+          "Data & comms rooms",
+          "Real estate & property manager work",
           "Planned maintenance contracts",
-          "Street & car park lighting",
+          "Workplace test & tag",
+          "Car park & security lighting",
           "Generators & UPS"
         ]
       },
@@ -296,8 +288,7 @@ var SECTIONS = [
         "t": "one",
         "label": "EV chargers — approval status",
         "opts": [
-          "Grant-approved installer (OZEV or equivalent)",
-          "Manufacturer approved",
+          "Manufacturer approved / certified",
           "I install them, no formal approvals",
           "Don't do EV work"
         ]
@@ -375,8 +366,8 @@ var SECTIONS = [
           "Bank transfer",
           "Card",
           "Cash",
-          "Cheque",
           "Direct debit",
+          "Afterpay / buy now, pay later",
           "Finance / pay monthly",
           "Trade account"
         ]
@@ -444,7 +435,7 @@ var SECTIONS = [
       },
       {
         "t": "one",
-        "label": "Photos of the van livery and uniform",
+        "label": "Photos of the van signwriting and uniform",
         "opts": [
           "Yes, can send",
           "No"
@@ -585,8 +576,8 @@ var SECTIONS = [
         "label": "Who you want more of",
         "opts": [
           "Homeowners",
-          "Landlords",
-          "Letting & estate agents",
+          "Landlords / rental providers",
+          "Real estate agents & property managers",
           "Builders & contractors",
           "Commercial property / facilities",
           "Industrial",
@@ -705,7 +696,7 @@ var SECTIONS = [
       {
         "t": "area",
         "label": "Your complaints procedure",
-        "hint": "Several schemes require members to publish one. If you have wording from them, paste it here."
+        "hint": "How a customer raises a problem, and what you do about it. If a trade association you belong to has wording for this, paste it here."
       }
     ]
   }

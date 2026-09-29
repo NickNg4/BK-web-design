@@ -200,10 +200,9 @@ Carried into the form's intro copy deliberately. Chase these by phone rather tha
    covers decide whether there are location pages at all, and email hosting decides whether
    pointing the domain breaks his mail — so get both by phone, or restore those sections from
    `9d7fbe0`.
-6. **The questionnaire reads as British.** Its examples and options include NICEIC, Part P,
-   pounds, VAT and West Midlands towns, from before the client was known to be in Victoria.
-   An Australian electrician will stumble on them — the Victorian equivalents are ESV, the REC
-   number, the A-grade licence, GST and the ABN. Worth localising before it goes out.
+6. ~~The questionnaire reads as British.~~ Localised for Victoria on 2026-09-29: GST and ABN,
+   REC number and ESV, Australian trade bodies, tickets and review sites, dollars and
+   Melbourne examples. Same 78 questions and storage keys.
 
 ## Working on this from a cloud session
 

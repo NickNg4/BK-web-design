@@ -201,7 +201,7 @@ body.push(new Paragraph({
 }));
 [
   "Logo files — the original vector versions if you can find them, not a screenshot",
-  "Scheme and trade body badges (NICEIC, NAPIT and the rest)",
+  "Trade association badges (Master Electricians, NECA and the rest)",
   "Insurance certificates",
   "Job photos — before and after, the biggest files you have, not the ones WhatsApp shrank",
   "Photos of you, the team and the van",

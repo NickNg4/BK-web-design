@@ -454,14 +454,14 @@
         "t": "text",
         "r": true,
         "label": "Country",
-        "ph": "United Kingdom"
+        "ph": "Australia"
       },
       {
         "k": "region",
         "t": "text",
         "r": true,
-        "label": "State, county or region",
-        "ph": "West Midlands"
+        "label": "State and area",
+        "ph": "Victoria — Melbourne's south-east"
       }
     ]
   },
@@ -475,15 +475,15 @@
         "k": "legal_name",
         "t": "text",
         "r": true,
-        "label": "Registered legal name",
-        "ph": "Hartley Electrical Services Ltd"
+        "label": "Registered business or company name, and ABN",
+        "ph": "BK Electrician Pty Ltd — ABN 12 345 678 901"
       },
       {
         "k": "trading_name",
         "t": "text",
         "r": true,
         "label": "Trading name customers actually say",
-        "ph": "Hartley Electrical"
+        "ph": "BK Electrician"
       },
       {
         "k": "tax_display",
@@ -491,15 +491,15 @@
         "r": true,
         "label": "Prices on the site should read…",
         "opts": [
-          "Including tax",
-          "Excluding tax",
+          "Including GST",
+          "Excluding GST",
           "No prices on the site at all"
         ]
       },
       {
         "k": "reg_address",
         "t": "area",
-        "label": "Registered address"
+        "label": "Registered business address"
       },
       {
         "k": "founded",
@@ -530,14 +530,15 @@
         "k": "licence_no",
         "t": "text",
         "r": true,
-        "label": "Electrical licence or registration number"
+        "label": "REC number and A-grade licence number",
+        "hint": "Your REC number has to appear on the website — Energy Safe Victoria requires it on all advertising."
       },
       {
         "k": "licence_body",
         "t": "text",
         "r": true,
         "label": "Who issued it",
-        "ph": "NICEIC · NAPIT · SELECT · state licensing board"
+        "ph": "Energy Safe Victoria"
       },
       {
         "k": "licence_expiry",
@@ -550,20 +551,11 @@
         "t": "many",
         "label": "Schemes and trade bodies you're a member of",
         "opts": [
-          "NICEIC",
-          "NAPIT",
-          "ELECSA",
-          "SELECT",
-          "RECI",
-          "Part P registered",
-          "Master Electricians",
+          "Master Electricians Australia",
           "NECA",
-          "IBEW",
-          "TrustMark",
-          "Which? Trusted Trader",
-          "SafeContractor",
-          "CHAS",
-          "Constructionline",
+          "Solar installer accreditation (SAA / CEC)",
+          "Housing Industry Association (HIA)",
+          "Master Builders Victoria",
           "Other"
         ]
       },
@@ -577,12 +569,12 @@
         "t": "many",
         "label": "Qualifications worth putting on the page",
         "opts": [
-          "18th Edition (BS 7671)",
-          "C&G 2391 inspection & testing",
-          "C&G 2919 EV charging",
-          "NVQ Level 3",
-          "JIB / ECS Gold Card",
-          "MCS solar PV",
+          "A-grade electrician's licence",
+          "Licensed Electrical Inspector (LEI)",
+          "Solar & battery installer accreditation",
+          "EV charger manufacturer training",
+          "Registered cabler (data & phone)",
+          "Refrigerant handling licence (ARCtick)",
           "Other"
         ]
       },
@@ -591,12 +583,12 @@
         "t": "text",
         "r": true,
         "label": "Public liability — cover amount and insurer",
-        "ph": "£5m, Aviva"
+        "ph": "$20m, CGU"
       },
       {
         "k": "ins_el",
         "t": "text",
-        "label": "Employers' liability — cover amount and insurer"
+        "label": "WorkCover (WorkSafe Victoria) — if you employ staff"
       },
       {
         "k": "ins_pi",
@@ -606,16 +598,16 @@
       {
         "k": "tickets",
         "t": "many",
-        "label": "Site tickets and safety cards",
+        "label": "Tickets and safety training",
         "opts": [
-          "CSCS / ECS card",
-          "IPAF",
-          "PASMA",
+          "White Card (construction induction)",
+          "EWP licence",
           "Working at heights",
           "Asbestos awareness",
           "Confined space",
-          "First aid",
-          "Manual handling"
+          "First aid / CPR",
+          "Low voltage rescue (LVR)",
+          "Test & tag"
         ]
       }
     ]
@@ -632,49 +624,49 @@
         "label": "Domestic work",
         "opts": [
           "Full and partial rewires",
-          "Consumer unit / fuse board upgrades",
-          "EICR inspection & testing",
-          "Landlord certificates",
-          "PAT testing",
+          "Switchboard upgrades",
+          "Safety switch (RCD) installation",
+          "Rental electrical safety checks",
+          "Pre-purchase electrical inspections",
           "Fault finding",
-          "Sockets & switches",
-          "Indoor lighting design",
+          "Power points & USB outlets",
+          "Indoor lighting & downlights",
           "Garden & outdoor lighting",
           "EV charger install",
-          "Solar PV & battery storage",
+          "Solar & battery storage",
           "Smart home / automation",
           "CCTV & alarms",
-          "Data & network cabling",
+          "Data & TV points",
           "Kitchen & bathroom electrics",
-          "Underfloor heating",
-          "Garage & outbuilding supply",
-          "Hot tub supply",
-          "New build first & second fix",
-          "Electric showers & cookers"
+          "Split-system air-con (electrical side)",
+          "Ceiling & exhaust fans",
+          "Smoke alarms",
+          "New builds & extensions (rough-in & fit-off)",
+          "Hot water systems & cooktops"
         ]
       },
       {
         "k": "svc_dom_other",
         "t": "area",
         "label": "Other domestic work — anything not on that list",
-        "ph": "Immersion heaters, extractor fans, doorbells and intercoms…"
+        "ph": "Pool pumps, doorbells and intercoms, sheds and granny flats…"
       },
       {
         "k": "svc_com",
         "t": "many",
         "label": "Commercial and industrial work",
         "opts": [
-          "Commercial EICR",
-          "Fire alarm install & testing",
-          "Emergency lighting",
+          "Commercial electrical inspections",
+          "Emergency & exit lighting testing",
           "Three-phase work",
-          "Shop & office fit-out",
+          "Shop & office fit-outs",
           "Machinery & control panels",
           "Distribution boards",
-          "Data centre / comms rooms",
-          "Landlord & agent contracts",
+          "Data & comms rooms",
+          "Real estate & property manager work",
           "Planned maintenance contracts",
-          "Street & car park lighting",
+          "Workplace test & tag",
+          "Car park & security lighting",
           "Generators & UPS"
         ]
       },
@@ -682,21 +674,21 @@
         "k": "svc_com_other",
         "t": "area",
         "label": "Other commercial or industrial work — anything not on that list",
-        "ph": "Shop-front signage supplies, refrigeration isolators, EV fleet charging…"
+        "ph": "Shop signage supplies, cool room isolators, EV fleet charging…"
       },
       {
         "k": "svc_top",
         "t": "area",
         "r": true,
         "label": "Your top three to five earners, best first",
-        "ph": "1. Consumer unit upgrades\n2. EV chargers\n3. Landlord EICRs\n4. Full rewires"
+        "ph": "1. Switchboard upgrades\n2. EV chargers\n3. Rental safety checks\n4. Full rewires"
       },
       {
         "k": "svc_never",
         "t": "area",
         "label": "Jobs you do NOT want the phone ringing about",
         "hint": "Just as valuable. Every wasted call costs you twenty minutes.",
-        "ph": "Anything with a hot tub. Appliance repairs. Jobs under £80."
+        "ph": "Pool pumps. Appliance repairs. Jobs under $150."
       },
       {
         "k": "emergency",
@@ -713,15 +705,14 @@
         "k": "emergency_promise",
         "t": "text",
         "label": "Response time you'd put in writing (in average)",
-        "ph": "On site within 2 hours inside the ring road"
+        "ph": "On site within 2 hours across the south-east suburbs"
       },
       {
         "k": "ev_status",
         "t": "one",
         "label": "EV chargers — approval status",
         "opts": [
-          "Grant-approved installer (OZEV or equivalent)",
-          "Manufacturer approved",
+          "Manufacturer approved / certified",
           "I install them, no formal approvals",
           "Don't do EV work"
         ]
@@ -730,7 +721,7 @@
         "k": "ev_brands",
         "t": "text",
         "label": "Brands you're approved or certified for",
-        "ph": "Zappi, Ohme, Tesla, GivEnergy, Hypervolt"
+        "ph": "Tesla, Zappi, Wallbox, Schneider, ABB"
       }
     ]
   },
@@ -744,7 +735,7 @@
         "k": "seo_terms",
         "t": "area",
         "label": "Exactly what you want to come up for",
-        "ph": "electrician Solihull\nEV charger installer Birmingham\nemergency electrician near me\nlandlord EICR Shirley"
+        "ph": "electrician Dandenong\nEV charger installer Melbourne\nemergency electrician near me\nrental safety check Berwick"
       }
     ]
   },
@@ -794,7 +785,7 @@
         "k": "price_fixed",
         "t": "area",
         "label": "Fixed-price jobs you're happy to see in print",
-        "ph": "EICR, 3-bed house: £180\nConsumer unit change: £550\nEV charger, standard install: £899"
+        "ph": "Rental safety check: $180\nSwitchboard upgrade: $1,800\nEV charger, standard install: $1,200"
       },
       {
         "k": "price_quote",
@@ -815,8 +806,8 @@
           "Bank transfer",
           "Card",
           "Cash",
-          "Cheque",
           "Direct debit",
+          "Afterpay / buy now, pay later",
           "Finance / pay monthly",
           "Trade account"
         ]
@@ -825,7 +816,7 @@
         "k": "price_deposit",
         "t": "text",
         "label": "Deposit terms",
-        "ph": "30% up front on jobs over £1,000"
+        "ph": "30% up front on jobs over $1,000"
       }
     ]
   },
@@ -899,7 +890,7 @@
       {
         "k": "van_photos",
         "t": "one",
-        "label": "Photos of the van livery and uniform",
+        "label": "Photos of the van signwriting and uniform",
         "opts": [
           "Yes, can send",
           "No"
@@ -997,7 +988,7 @@
         "k": "reviews_other",
         "t": "area",
         "label": "Other review profiles",
-        "ph": "Checkatrade, Trustpilot, MyBuilder, Rated People, Yelp, Angi — paste the links"
+        "ph": "hipages, Oneflare, ServiceSeeking, Airtasker, Facebook — paste the links"
       },
       {
         "k": "reviews_count",
@@ -1010,7 +1001,7 @@
         "t": "area",
         "label": "Testimonials you're allowed to publish",
         "hint": "Quote, first name, town. A specific one about a difficult job beats five saying \"great service\".",
-        "ph": "\"Found a fault two other sparkies had missed.\" — Dave, Shirley"
+        "ph": "\"Found a fault two other sparkies had missed.\" — Dave, Frankston"
       },
       {
         "k": "casestudies",
@@ -1018,7 +1009,7 @@
         "r": true,
         "label": "Three to six jobs worth writing up properly",
         "hint": "For each: what was wrong, what you did, what it cost or saved them. These become the pages that win the bigger work.",
-        "ph": "Victorian semi in Moseley — no earth on the lighting circuit, rewired over 4 days while family stayed in…"
+        "ph": "1950s weatherboard in Cheltenham — ceramic fuses, no safety switches. New switchboard and rewire over 3 days…"
       },
       {
         "k": "clients_named",
@@ -1064,8 +1055,8 @@
         "label": "Who you want more of",
         "opts": [
           "Homeowners",
-          "Landlords",
-          "Letting & estate agents",
+          "Landlords / rental providers",
+          "Real estate agents & property managers",
           "Builders & contractors",
           "Commercial property / facilities",
           "Industrial",
@@ -1077,7 +1068,7 @@
         "k": "leads_now",
         "t": "text",
         "label": "Enquiries a month now, and where they come from",
-        "ph": "About 30 — mostly word of mouth and Checkatrade"
+        "ph": "About 30 — mostly word of mouth and hipages"
       },
       {
         "k": "leads_target",
@@ -1125,7 +1116,7 @@
         "t": "text",
         "label": "Job management software you already use",
         "hint": "If it has a booking widget we should plug into it rather than build a second diary you'd forget to check.",
-        "ph": "ServiceM8 · Tradify · Jobber · Commusoft · Housecall Pro · none"
+        "ph": "ServiceM8 · Tradify · Fergus · simPRO · AroFlo · none"
       },
       {
         "k": "form_fields",
@@ -1173,7 +1164,7 @@
         "r": true,
         "label": "Your story",
         "hint": "How you started, why you went out on your own, what you care about getting right. A few sentences in your own words is plenty — this is the About page and people do read it.",
-        "ph": "Started as an apprentice at 17 with a firm in Redditch, went out on my own in 2011 after…"
+        "ph": "Did my apprenticeship with a firm in Dandenong, went out on my own in 2015 after…"
       }
     ]
   },
@@ -1200,13 +1191,13 @@
         "k": "legal_footer",
         "t": "text",
         "label": "Anything that has to appear in the footer",
-        "ph": "Company number, registered office, scheme registration number"
+        "ph": "ABN, REC number, licence number"
       },
       {
         "k": "complaints",
         "t": "area",
         "label": "Your complaints procedure",
-        "hint": "Several schemes require members to publish one. If you have wording from them, paste it here."
+        "hint": "How a customer raises a problem, and what you do about it. If a trade association you belong to has wording for this, paste it here."
       }
     ]
   }
