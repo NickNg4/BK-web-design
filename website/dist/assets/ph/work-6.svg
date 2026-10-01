@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" role="img" aria-label="Photo needed">
+<defs><pattern id="s" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="28" height="28" fill="#e8ebe4"/><rect width="14" height="28" fill="#e2e6de"/></pattern></defs>
+<rect width="900" height="700" fill="url(#s)"/>
+<rect x="25" y="25" width="850" height="650" fill="none" stroke="#b5bdb0" stroke-width="3" stroke-dasharray="14 10" rx="10"/>
+<g transform="translate(411.5 230.325) scale(3.2083333333333335)" fill="none" stroke="#7d887f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></g>
+<text x="450" y="359.825" text-anchor="middle" font-family="Arial, sans-serif" font-size="35" font-weight="700" letter-spacing="1" fill="#3f4a42">PHOTO NEEDED</text>
+<text x="450" y="413.775" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" fill="#4b5750">The team together, or with the van.</text>
+<text x="450" y="465.075" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" fill="#6f7a72">900 × 700 px or larger · landscape · file: work-6</text>
+</svg>

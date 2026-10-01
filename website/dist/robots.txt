@@ -1,0 +1,3 @@
+# Sample site — placeholders still to fill. Not for indexing yet.
+User-agent: *
+Disallow: /

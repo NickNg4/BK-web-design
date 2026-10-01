@@ -1,5 +1,19 @@
 {
+  "name": "BK-web-design",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Client intake questionnaire for an electrician's website build, in three formats from one source",
+  "scripts": {
+    "build": "node build-html.js && node build-gs.js && node build-docx.js",
+    "verify": "node verify.js",
+    "check": "npm run build && npm run verify",
+    "build:site": "node website/build.js",
+    "test:site": "node website/test/site.test.js"
+  },
   "dependencies": {
     "docx": "^9.7.1"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
   }
 }

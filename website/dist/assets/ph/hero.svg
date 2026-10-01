@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-label="Photo needed">
+<defs><pattern id="s" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="28" height="28" fill="#e8ebe4"/><rect width="14" height="28" fill="#e2e6de"/></pattern></defs>
+<rect width="1600" height="1100" fill="url(#s)"/>
+<rect x="39" y="39" width="1522" height="1022" fill="none" stroke="#b5bdb0" stroke-width="3" stroke-dasharray="14 10" rx="10"/>
+<g transform="translate(735.1 285.29999999999995) scale(5.408333333333334)" fill="none" stroke="#7d887f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></g>
+<text x="800" y="503.59999999999997" text-anchor="middle" font-family="Arial, sans-serif" font-size="59" font-weight="700" letter-spacing="1" fill="#3f4a42">PHOTO NEEDED</text>
+<text x="800" y="595.1999999999999" text-anchor="middle" font-family="Arial, sans-serif" font-size="46" fill="#4b5750">You installing a split system — outdoor unit or</text>
+<text x="800" y="657.3" text-anchor="middle" font-family="Arial, sans-serif" font-size="46" fill="#4b5750">indoor head — or the van outside a job. Landscape,</text>
+<text x="800" y="719.4" text-anchor="middle" font-family="Arial, sans-serif" font-size="46" fill="#4b5750">bright, in focus.</text>
+<text x="800" y="806.8" text-anchor="middle" font-family="Arial, sans-serif" font-size="39" fill="#6f7a72">1600 × 1100 px or larger · landscape · file: hero</text>
+</svg>
