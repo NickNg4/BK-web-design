@@ -76,6 +76,7 @@ const TOKENS = {
   rec: B.rec,
   phone: B.phone,
   owner: B.owner,
+  arctick: B.arctick,
   replyWithin: B.replyWithin,
   emergencyWhen: B.emergency ? B.emergency.when : '',
 };
@@ -118,6 +119,8 @@ const year = new Date().getFullYear();
 
 const ICONS = {
   bolt: '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2z"/>',
+  ac: '<rect x="2.5" y="5" width="19" height="8" rx="2"/><path d="M6 10.5h12"/><path d="M7 16.5c0 1.2-.8 1.6-.8 2.8M12 16.5c0 1.2-.8 1.6-.8 2.8M17 16.5c0 1.2-.8 1.6-.8 2.8"/>',
+  ducted: '<path d="M3 7h11a3 3 0 0 1 3 3v0a3 3 0 0 0 3 3h1"/><path d="M3 12h8a3 3 0 0 1 3 3v6"/><path d="M18 18l2 2 2-2"/><path d="M8 21h8"/>',
   clipboard: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5"/><path d="m9 13 2 2 4-4"/>',
   switchboard: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7v4M12 7v4M16 7v4"/><path d="M8 15h8"/>',
   car: '<path d="M5 16v-5l1.8-4.2A2 2 0 0 1 8.6 5.5h6.8a2 2 0 0 1 1.8 1.3L19 11v5"/><path d="M4 16h16v2.5H4z"/><path d="M12.6 8 11 11h2l-1.6 3"/>',
@@ -228,7 +231,7 @@ function split(inner, key, cls = '') {
 
 const NAV = [
   ['services.html', 'Services'],
-  ['rental-safety-checks.html', 'Rental checks'],
+  ['split-system-installation.html', 'Air conditioning'],
   ['areas.html', 'Areas'],
   ['about.html', 'About'],
   ['contact.html', 'Contact'],
@@ -275,7 +278,7 @@ ${sampleBar()}
 <div class="topbar">
   <div class="wrap">
     <span class="topbar-item">${icon('shield')}REC&nbsp;${t(B.rec)}</span>
-    <span class="topbar-item hide-sm">Licensed &amp; insured electricians</span>
+    <span class="topbar-item hide-sm">Air-con &amp; electrical · licensed &amp; insured</span>
     <span class="topbar-item hide-sm">${icon('pin')}Servicing ${t(B.region)}, VIC</span>
     ${emergencyOn ? `<span class="topbar-item topbar-urgent">${icon('bolt')}${t(B.emergency.when)} emergency call-outs</span>` : ''}
   </div>
@@ -310,7 +313,7 @@ function footer() {
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <a class="brand brand-light" href="index.html">${brand()}</a>
-      <p>Licensed electricians for homes, rentals and businesses across ${t(B.region)}.</p>
+      <p>Air conditioning and electrical, installed and serviced by a licensed electrician across ${t(B.region)}.</p>
       <ul class="creds">
         <li>REC ${t(B.rec)}</li>
         <li>Licence ${t(B.licence)}</li>
@@ -495,6 +498,7 @@ function homePage() {
   const sheet = [
     ['Registered Electrical Contractor', `REC ${B.rec}`],
     ['Electrical licence', B.licence],
+    ['Refrigerant handling (ARCtick)', B.arctick],
     ['Public liability', B.insurance],
     ['Certificate of Electrical Safety', '<span class="tick">✓</span> Every installation job'],
     ['Switchboard work', '<span class="tick">✓</span> Independently inspected'],
@@ -609,8 +613,8 @@ ${ctaBand(`Need a sparky in ${B.region}?`, 'Call me, or text a photo of the prob
 
   return layout({
     file: 'index.html',
-    title: `${B.name} | Licensed Electrician in ${B.region}, VIC`,
-    description: `${B.owner} at ${B.name} — licensed, insured electrician in ${B.region}. Upfront prices for switchboard upgrades, rental safety checks, EV chargers and repairs. REC ${B.rec}.`,
+    title: `${B.name} | Air Conditioning & Electrical in ${B.region}, VIC`,
+    description: `${B.owner} at ${B.name} — licensed, insured electrician in ${B.region}. Split system and ducted air-con installed and serviced, plus electrical work. Upfront prices. REC ${B.rec}.`,
     body,
     current: 'index.html',
   });
@@ -637,8 +641,8 @@ function servicesPage() {
 <section class="page-hero">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> / <span>Services</span></nav>
-    <h1>Electrical services</h1>
-    <p class="lead">Everything from a new power point to a full switchboard upgrade, for homes, rentals and businesses across ${t(B.region)}.</p>
+    <h1>Air conditioning &amp; electrical</h1>
+    <p class="lead">Split systems and ducted air-con, servicing and repairs — and the electrical work that goes with them — across ${t(B.region)}.</p>
   </div>
 </section>
 <section class="section">
@@ -654,8 +658,8 @@ ${ctaBand()}`;
 
   return layout({
     file: 'services.html',
-    title: `Electrical Services | ${B.name}`,
-    description: `Switchboard upgrades, rental safety checks, EV chargers, lighting, power points and repairs across ${B.region}. Licensed and insured.`,
+    title: `Air Conditioning & Electrical Services | ${B.name}`,
+    description: `Split system and ducted air conditioning, servicing and repairs, switchboard upgrades and electrical work across ${B.region}. Licensed and insured.`,
     body,
     current: 'services.html',
   });
@@ -716,7 +720,7 @@ ${ctaBand(s.cta || `${s.name} in {region}`)}
     title: `${s.name} in ${B.region} | ${B.name}`,
     description: `${s.short} ${B.name}, licensed electricians in ${B.region}. REC ${B.rec}.`,
     body,
-    current: s.slug === 'rental-safety-checks' ? 'rental-safety-checks.html' : 'services.html',
+    current: s.slug === 'split-system-installation' ? 'split-system-installation.html' : 'services.html',
   });
 }
 
@@ -753,6 +757,7 @@ function aboutPage() {
   const creds = [
     ['Registered Electrical Contractor', `REC ${B.rec}`],
     ['Electrical licence', B.licence],
+    ['Refrigerant handling licence (ARCtick)', B.arctick],
     ['Public liability insurance', B.insurance],
     ['ABN', B.abn],
     ['In business since', B.founded],
@@ -763,7 +768,7 @@ function aboutPage() {
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> / <span>About</span></nav>
     <h1>${t(C.about.headline)}</h1>
-    <p class="lead">${esc(B.name)} is run by ${t(B.owner)} — a licensed A-grade electrician looking after homes, rentals and businesses across ${t(B.region)}.</p>
+    <p class="lead">${esc(B.name)} is run by ${t(B.owner)} — a licensed A-grade electrician who installs and services air conditioning across ${t(B.region)}, and does the electrical work that goes with it.</p>
   </div>
 </section>
 <section class="section">

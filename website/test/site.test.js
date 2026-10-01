@@ -176,8 +176,14 @@ const note = (s) => console.log('  ' + s);
   const home = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
   if (/for prescribed work/.test(home)) fail.push('home still limits the COES to prescribed work');
   if (!/Certificate of Electrical Safety<\/dt><dd><span class="tick">✓<\/span> Every installation job/.test(home)) fail.push('COES line missing from the test sheet');
-  const em = fs.readFileSync(path.join(DIST, 'emergency-electrician.html'), 'utf8');
-  if (/Book emergency electrician/.test(em)) fail.push('emergency page still says "Book emergency electrician"');
+  for (const f of pages.filter((f) => /^(split|ducted|air-con|switchboard)/.test(f))) {
+    const html = fs.readFileSync(path.join(DIST, f), 'utf8');
+    const name = (html.match(/<h1>([^<]+)<\/h1>/) || [])[1] || '';
+    const closing = html.match(/<section class="cta-band">[\s\S]*?<\/h2>/)[0];
+    // the old template glued "Book" to the lower-cased service name
+    if (name && closing.includes(`Book ${name.toLowerCase()}`)) fail.push(`${f}: closing heading reads "Book ${name.toLowerCase()}"`);
+  }
+  if (!/ARCtick/.test(home)) fail.push('ARCtick licence missing from the home test sheet');
   const recOnEvery = pages.filter((f) => !/REC&nbsp;<span class="ph">\[00000\]<\/span>|REC&nbsp;\d/.test(fs.readFileSync(path.join(DIST, f), 'utf8')));
   if (recOnEvery.length) fail.push(`REC number missing from the header of: ${recOnEvery.join(', ')}`);
   note('COES wording, service headings, REC on every page (required on advertising in Victoria)');
@@ -187,7 +193,7 @@ const note = (s) => console.log('  ' + s);
   await d.goto(url('index.html'));
   await d.screenshot({ path: path.join(SHOTS, 'home-desktop-top.png') });
   await d.screenshot({ path: path.join(SHOTS, 'home-desktop-full.png'), fullPage: true });
-  await d.goto(url('rental-safety-checks.html'));
+  await d.goto(url('split-system-installation.html'));
   await d.screenshot({ path: path.join(SHOTS, 'service-page.png'), fullPage: true });
 
   await browser.close();

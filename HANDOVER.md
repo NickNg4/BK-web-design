@@ -102,10 +102,15 @@ instructions are in `website/README.md`; the parts that matter for handover:
 - **Built around Victorian rules**, each checked against ESV or Consumer Affairs Victoria:
   REC number on every page, Certificates of Electrical Safety for all installation work,
   independent inspection of switchboard (prescribed) work, and the rental check change below.
-- **The rental safety-check page is timely.** From **13 October 2026** every Victorian rental
-  needs an electrical safety check every two years — not just leases signed since March 2021.
-  It is on the home page, in the menu, and has its own page. Once it stops being news, set
-  `home.notice` to `null`.
+- **His work is mainly air conditioning** (confirmed 2026-10-01). The site leads with split
+  systems, ducted and servicing, each with its own page, plus switchboard upgrades because
+  air-con is what overloads old boards. Rental safety checks and the rest are listed but have
+  no page. Two claims stay bracketed until he confirms them: his **ARCtick refrigerant
+  handling licence** (required to install split systems) and whether he is an accredited
+  **Victorian Energy Upgrades** provider (required to offer the VEU discount).
+- **Design:** a switchboard look — circuit-schedule services, a test-sheet for credentials,
+  a rate card — written in his own voice. His promises and prices are guesses and stay
+  bracketed until he rewrites or approves them.
 - `npm run build:site` builds it; `npm run test:site` checks it in a real browser.
 
 ## The three routes to collect answers
