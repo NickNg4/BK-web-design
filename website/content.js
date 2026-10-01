@@ -90,27 +90,45 @@ module.exports = {
     allowPhotos: true,
   },
 
+  // Written in his voice — first person, plain words. Anything bracketed is a
+  // claim only he can make: confirm it with him (§12, §14 of the brief) rather
+  // than leaving our guess in.
   home: {
-    headline: 'Electricians you can count on across {region}',
-    lead: 'Switchboards, safety checks, EV chargers and everyday repairs — done properly, tested, and certified. Local, licensed, and on time.',
+    greeting: "G'day, I'm {owner}.",
+    headline: '[I turn up when I say I will.]',
+    lead: 'I run {name} in {region}. When you call, you get me — not a call centre. Switchboards, rental safety checks, EV chargers and everyday repairs, quoted upfront and tested before I leave.',
+    status: '[Taking new jobs this week]',
+    directLine: 'Straight to my mobile',
     // Timely: the rental rules change on 13 October 2026. Set to null later.
     notice: {
       text: 'From 13 October 2026, every Victorian rental needs an electrical safety check every two years — not just leases signed since 2021.',
       link: 'rental-safety-checks.html',
       cta: 'Book a rental safety check',
     },
-    why: [
-      ['Licensed and registered', 'A-grade licensed electricians, registered with Energy Safe Victoria as REC {rec}.'],
-      ['Certified, every time', 'Every installation job comes with a Certificate of Electrical Safety — your legal proof it was done to standard.'],
-      ['Upfront pricing', 'A clear, fixed quote before we start. No surprises on the invoice.'],
-      ['[Your differentiator]', '[Why someone should pick you over the next electrician — in plain words, the way you would say it on the doorstep.]'],
+    // The promises, as he would say them on the doorstep.
+    promises: [
+      ['On time, or I call', '[If I am running late, you hear it from me before the time we agreed — not after.]'],
+      ['Price first', 'You get a fixed price before I start. The invoice matches the quote.'],
+      ['Photo before I leave', '[I send you a photo of the finished work, and the certificate, before I drive away.]'],
+      ['Tidy', '[Drop sheets down, dust gone, old parts taken away. You would not know I had been — apart from it working.]'],
     ],
     steps: [
-      ['Call or send photos', 'Tell us what is going on. A photo of the problem often lets us quote on the spot.'],
-      ['Get a fixed quote', 'You know the price before any work starts.'],
-      ['We do the job', 'On time, tidy, and tested before we leave.'],
-      ['You get certified', 'A Certificate of Electrical Safety for the installation work, lodged with Energy Safe Victoria.'],
+      ['Call or text a photo', 'Tell me what is going on. A photo of the problem often gets you a price on the spot.'],
+      ['Fixed quote', 'You know the price before any work starts.'],
+      ['Job done, tested', 'On time, tidy, and tested before I leave.'],
+      ['Certified', 'A Certificate of Electrical Safety, lodged with Energy Safe Victoria.'],
     ],
+    // Published prices — the most specific thing a trade site can say, and
+    // the thing competitors avoid. Delete any line he would rather quote.
+    rates: [
+      ['Call-out (first 30 min)', '[$000]'],
+      ['Rental safety check', '[$000]'],
+      ['Extra power point', '[$000]'],
+      ['Safety switch (RCD) fitted', '[$000]'],
+      ['Switchboard upgrade', 'from [$0,000]'],
+      ['EV charger, standard install', 'from [$0,000]'],
+    ],
+    ratesNote: 'Prices include GST. Fixed quote before any work starts.',
   },
 
   // Services. `page: true` gets its own page (the work that pays — see §04 of

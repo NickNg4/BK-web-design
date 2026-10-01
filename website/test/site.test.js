@@ -175,7 +175,7 @@ const note = (s) => console.log('  ' + s);
   console.log('5. copy checks');
   const home = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
   if (/for prescribed work/.test(home)) fail.push('home still limits the COES to prescribed work');
-  if (!/Certificate of Electrical Safety on every installation job/.test(home)) fail.push('COES trust line missing');
+  if (!/Certificate of Electrical Safety<\/dt><dd><span class="tick">✓<\/span> Every installation job/.test(home)) fail.push('COES line missing from the test sheet');
   const em = fs.readFileSync(path.join(DIST, 'emergency-electrician.html'), 'utf8');
   if (/Book emergency electrician/.test(em)) fail.push('emergency page still says "Book emergency electrician"');
   const recOnEvery = pages.filter((f) => !/REC&nbsp;<span class="ph">\[00000\]<\/span>|REC&nbsp;\d/.test(fs.readFileSync(path.join(DIST, f), 'utf8')));

@@ -75,6 +75,7 @@ const TOKENS = {
   baseSuburb: B.baseSuburb,
   rec: B.rec,
   phone: B.phone,
+  owner: B.owner,
   replyWithin: B.replyWithin,
   emergencyWhen: B.emergency ? B.emergency.when : '',
 };
@@ -107,6 +108,7 @@ const services = C.services.filter((s) => emergencyOn || !s.emergency);
 const featured = services.filter((s) => s.page);
 const serviceHref = (s) => (s.page ? `${s.slug}.html` : `services.html#${s.slug}`);
 const SERVICE_SLUGS = new Set(C.services.map((s) => s.slug));
+const circuitNo = (s) => `C${String(services.indexOf(s) + 1).padStart(2, '0')}`;
 
 const year = new Date().getFullYear();
 
@@ -383,11 +385,11 @@ ${SAMPLE ? '<meta name="robots" content="noindex, nofollow">\n' : ''}<link rel="
 <meta property="og:description" content="${a(description)}">
 <meta property="og:url" content="${a(canonical)}">
 <meta property="og:locale" content="en_AU">
-<meta name="theme-color" content="#0f2940">
+<meta name="theme-color" content="#16181a">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 <script>document.documentElement.classList.add('js')</script>
 ${structuredData()}
@@ -473,84 +475,116 @@ function homePage() {
   </div>
 </section>` : '';
 
-  const trust = [
-    ['certificate', 'Certificate of Electrical Safety on every installation job'],
-    ['tag', 'Fixed, upfront quotes'],
-    ['shield', `${B.insurance} public liability cover`],
-  ];
-  if (emergencyOn) trust.push(['bolt', `${B.emergency.when} emergency call-outs`]);
-
+  const heroImg = photo('hero', 'hero-img', true);
+  const mapImg = photo('map');
   const work = ['work-1', 'work-2', 'work-3', 'work-4', 'work-5', 'work-6']
     .map((k) => photo(k)).filter(Boolean)
     .map((img) => `<figure class="work-item">${img}</figure>`).join('');
-
   const areas = C.areas.slice(0, 8).map((x) => `<li>${t(x)}</li>`).join('');
-  const heroImg = photo('hero', 'hero-img', true);
-  const mapImg = photo('map');
+
+  // The services, laid out as the schedule label inside a switchboard door.
+  const schedule = services.map((s) => `
+    <a class="circuit${s.page ? ' circuit-featured' : ''}" href="${serviceHref(s)}">
+      <span class="circuit-no">${circuitNo(s)}</span>
+      <span class="breaker" aria-hidden="true"></span>
+      <span class="circuit-name">${esc(s.name)}</span>
+      <span class="circuit-desc">${t(s.short)}</span>
+      ${icon('arrow')}
+    </a>`).join('');
+
+  const sheet = [
+    ['Registered Electrical Contractor', `REC ${B.rec}`],
+    ['Electrical licence', B.licence],
+    ['Public liability', B.insurance],
+    ['Certificate of Electrical Safety', '<span class="tick">✓</span> Every installation job'],
+    ['Switchboard work', '<span class="tick">✓</span> Independently inspected'],
+  ].map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v.includes('<span class="tick">') ? v : t(v)}</dd></div>`).join('');
+
+  const rates = H.rates.map(([k, v]) => `<li><span>${t(k)}</span><span class="rate-dots" aria-hidden="true"></span><span class="rate-price">${t(v)}</span></li>`).join('');
 
   const body = `
 <section class="hero">
   <div class="wrap hero-grid${heroImg ? '' : ' is-solo'}">
     <div class="hero-copy">
-      <p class="eyebrow eyebrow-light">${icon('shield')} Licensed · Insured · REC ${t(B.rec)}</p>
+      <p class="greeting">${t(H.greeting)}</p>
       <h1>${t(H.headline)}</h1>
       <p class="lead">${t(H.lead)}</p>
       <div class="hero-actions">
         ${callButton('btn btn-volt btn-lg')}
-        <a class="btn btn-outline-light btn-lg" href="contact.html">Get a free quote</a>
+        <a class="btn btn-ghost btn-lg" href="contact.html">Text me a photo</a>
       </div>
-      <ul class="trust">
-        ${trust.map(([ic, txt]) => `<li>${icon(ic)}<span>${t(txt)}</span></li>`).join('')}
-      </ul>
+      <p class="direct-line">
+        <span class="status"><span class="status-led" aria-hidden="true"></span>${t(H.status)}</span>
+        <span aria-hidden="true">·</span>
+        <span>${t(H.directLine)}</span>
+      </p>
     </div>
     ${heroImg ? `<div class="hero-media">
-      ${heroImg}
-      ${googleOn ? `<div class="hero-badge">${stars()}<span><strong>${t(B.google.rating)}</strong> on Google</span></div>` : ''}
+      <div class="hero-frame">${heroImg}</div>
+      <p class="hero-tag"><strong>${t(B.owner)}</strong>A-grade electrician · REC ${t(B.rec)}${googleOn ? `<br>${stars()} ${t(B.google.rating)} on Google` : ''}</p>
     </div>` : ''}
   </div>
 </section>
 ${notice}
+
 <section class="section">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">What we do</p>
-      <h2>Electrical work for homes, rentals and businesses</h2>
-      <p>From a single power point to a full switchboard upgrade — quoted upfront, done properly, and tested before we leave.</p>
+      <p class="eyebrow">${icon('switchboard')} Circuit schedule</p>
+      <h2>What I do</h2>
+      <p>Every job quoted upfront, done properly, and tested before I leave. Pick a circuit.</p>
     </div>
-    <div class="services-grid">${services.slice(0, 8).map(serviceCard).join('')}</div>
-    <p class="center"><a class="btn btn-ghost" href="services.html">All services ${icon('arrow')}</a></p>
+    <div class="schedule">
+      <div class="schedule-head" aria-hidden="true"><span>Circuit</span><span></span><span>Service</span><span>What it covers</span><span></span></div>
+      ${schedule}
+    </div>
   </div>
 </section>
 
 <section class="section section-alt">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">Why ${esc(B.name)}</p>
-      <h2>Done right the first time</h2>
+  <div class="wrap promise-grid">
+    <div>
+      <p class="eyebrow">${icon('shield')} My word on it</p>
+      <h2>How I work</h2>
+      <ol class="promises">
+        ${H.promises.map(([h, p]) => `<li><div><h3>${t(h)}</h3><p>${t(p)}</p></div></li>`).join('')}
+      </ol>
+      <p class="signoff">— ${t(B.owner)}</p>
     </div>
-    <div class="why-grid">
-      ${H.why.map(([h, p], i) => `<div class="why"><span class="why-n">0${i + 1}</span><h3>${t(h)}</h3><p>${t(p)}</p></div>`).join('')}
+    <div>
+      <div class="testsheet">
+        <h3>Test sheet · ${esc(B.name)}</h3>
+        <dl>${sheet}</dl>
+      </div>
+      <span class="stamp">Checked · Licensed · Insured</span>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">How it works</p>
-      <h2>Four steps, no surprises</h2>
+  <div class="wrap promise-grid">
+    <div>
+      <p class="eyebrow">${icon('tag')} Rate card</p>
+      <h2>Prices, up front</h2>
+      <p class="lead">Most electricians won't put a price online. I'd rather you knew before you called. Every job still gets a fixed quote before I start.</p>
+      <ol class="steps steps-compact">
+        ${H.steps.map(([h, p]) => `<li><h3>${t(h)}</h3><p>${t(p)}</p></li>`).join('')}
+      </ol>
     </div>
-    <ol class="steps">
-      ${H.steps.map(([h, p]) => `<li><h3>${t(h)}</h3><p>${t(p)}</p></li>`).join('')}
-    </ol>
+    <div class="ratecard">
+      <h3>Rate card · inc GST</h3>
+      <ul>${rates}</ul>
+      <p>${t(H.ratesNote)}</p>
+    </div>
   </div>
 </section>
 
 ${work ? `<section class="section section-alt">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">Recent work</p>
-      <h2>Jobs we are proud of</h2>
+      <p class="eyebrow">${icon('certificate')} Job log</p>
+      <h2>Recent work</h2>
+      <p>Real jobs, photographed on the day.</p>
     </div>
     <div class="work-grid">${work}</div>
   </div>
@@ -561,22 +595,22 @@ ${reviewsSection()}
 <section class="section">
   <div class="wrap areas-teaser${mapImg ? '' : ' is-solo'}">
     <div>
-      <p class="eyebrow">Where we work</p>
+      <p class="eyebrow">${icon('pin')} Service area</p>
       <h2>Local to ${t(B.region)}</h2>
-      <p>Based in ${t(B.baseSuburb)} and working across the suburbs around it.</p>
+      <p>Based in ${t(B.baseSuburb)}. These are the suburbs I'm in every week.</p>
       <ul class="chips">${areas}</ul>
-      <a class="btn btn-ghost" href="areas.html">All areas we cover ${icon('arrow')}</a>
+      <a class="btn btn-ghost" href="areas.html">Every suburb I cover ${icon('arrow')}</a>
     </div>
     ${mapImg ? `<figure class="areas-map">${mapImg}</figure>` : ''}
   </div>
 </section>
 
-${ctaBand()}`;
+${ctaBand(`Need a sparky in ${B.region}?`, 'Call me, or text a photo of the problem — most of the time I can give you a price straight away.')}`;
 
   return layout({
     file: 'index.html',
     title: `${B.name} | Licensed Electrician in ${B.region}, VIC`,
-    description: `${B.name} — licensed, insured electricians in ${B.region}. Switchboard upgrades, rental safety checks, EV chargers and repairs. REC ${B.rec}.`,
+    description: `${B.owner} at ${B.name} — licensed, insured electrician in ${B.region}. Upfront prices for switchboard upgrades, rental safety checks, EV chargers and repairs. REC ${B.rec}.`,
     body,
     current: 'index.html',
   });
@@ -640,6 +674,7 @@ function servicePage(s) {
   <div class="wrap page-hero-grid">
     <div>
       <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> / <a href="services.html">Services</a> / <span>${esc(s.name)}</span></nav>
+      <p class="eyebrow">${icon(s.icon)} Circuit ${circuitNo(s)}</p>
       <h1>${esc(s.name)}</h1>
       <p class="lead">${t(s.lead)}</p>
       <div class="hero-actions">
